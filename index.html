@@ -33,357 +33,306 @@
       overflow: hidden;
     }
 
-    #app {
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      max-width: 480px;
-      margin: 0 auto;
+    /* ── Username modal ── */
+    #username-modal {
+      position: fixed; inset: 0;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; padding: 32px 24px;
     }
+
+    .un-card {
+      width: 100%; max-width: 300px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 14px; text-align: center;
+    }
+
+    .un-logo {
+      width: 76px; height: 76px;
+      background: linear-gradient(145deg, #ff3b30, #8b0000);
+      border-radius: 22px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 4px;
+      box-shadow: 0 8px 24px rgba(230,57,70,0.35);
+    }
+    .un-logo svg { width: 38px; height: 38px; }
+
+    .un-card h1 { font-size: 26px; font-weight: 800; }
+    .un-card p  { font-size: 13px; color: var(--sub); line-height: 1.6; }
+
+    #username-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid transparent;
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-size: 16px; font-weight: 600;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-top: 4px;
+    }
+    #username-input::placeholder { color: var(--sub); font-weight: 400; }
+    #username-input:focus { border-color: var(--primary); }
+
+    #btn-set-username {
+      width: 100%;
+      background: var(--primary); border: none;
+      border-radius: 14px; padding: 14px;
+      color: #fff; font-size: 16px; font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #btn-set-username:active { opacity: 0.8; transform: scale(0.97); }
+
+    .un-hint { font-size: 11px; color: var(--sub); opacity: 0.6; }
+
+    /* ── App layout ── */
+    #app {
+      height: 100dvh; display: flex; flex-direction: column;
+      max-width: 480px; margin: 0 auto;
+    }
+
+    /* ── Top bar ── */
+    #top-bar {
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px 2px;
+    }
+
+    #app-name { font-size: 14px; font-weight: 800; color: var(--primary); letter-spacing: 0.3px; }
+
+    #user-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface); border-radius: 20px;
+      padding: 5px 12px 5px 8px;
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+    }
+    #user-badge:active { background: var(--surface2); }
+    #user-badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+    #user-name {
+      font-size: 12px; font-weight: 600;
+      max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    #sync-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--sub); flex-shrink: 0; transition: background 0.3s;
+    }
+    #sync-dot.syncing { background: #ff9f0a; animation: blink 1s ease infinite; }
+    #sync-dot.synced  { background: #34c759; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
     /* ── Player ── */
-    #player-section {
-      flex-shrink: 0;
-      padding: 16px 20px 8px;
-    }
+    #player-section { flex-shrink: 0; padding: 10px 20px 8px; }
 
     #thumbnail-wrap {
-      width: 100%;
-      aspect-ratio: 16/9;
-      max-height: 190px;
-      border-radius: var(--r);
-      overflow: hidden;
-      background: var(--surface);
-      position: relative;
-      margin-bottom: 12px;
+      width: 100%; aspect-ratio: 16/9; max-height: 182px;
+      border-radius: var(--r); overflow: hidden;
+      background: var(--surface); position: relative; margin-bottom: 12px;
     }
-
-    #thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-    }
-
+    #thumbnail { width: 100%; height: 100%; object-fit: cover; display: none; }
     #thumb-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
     }
-
-    #thumb-placeholder svg { width: 44px; height: 44px; opacity: 0.25; }
+    #thumb-placeholder svg { width: 44px; height: 44px; opacity: 0.2; }
 
     #track-info { margin-bottom: 10px; }
-
     #track-title {
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.35;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 15px; font-weight: 700; line-height: 1.35;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
     #track-channel {
-      font-size: 12px;
-      color: var(--sub);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 12px; color: var(--sub); margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    /* Seek */
     #seek-wrap { margin-bottom: 10px; }
-
     #seek-times {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 5px;
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--sub); margin-top: 5px;
       font-variant-numeric: tabular-nums;
     }
 
-    /* Controls */
     #controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 20px; margin-bottom: 10px;
     }
-
     #controls button {
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: transform 0.12s ease, opacity 0.12s ease;
+      background: none; border: none; color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: transform 0.12s, opacity 0.12s;
       -webkit-tap-highlight-color: transparent;
     }
-
     #controls button:active { transform: scale(0.85); opacity: 0.7; }
-
-    #btn-prev, #btn-next {
-      width: 44px;
-      height: 44px;
-      background: var(--surface) !important;
-    }
-
-    #btn-playpause {
-      width: 62px;
-      height: 62px;
-      background: var(--primary) !important;
-    }
-
+    #btn-prev, #btn-next { width: 44px; height: 44px; background: var(--surface) !important; }
+    #btn-playpause      { width: 62px; height: 62px; background: var(--primary) !important; }
     #btn-prev svg, #btn-next svg { width: 20px; height: 20px; }
     #btn-playpause svg { width: 26px; height: 26px; }
 
-    /* Volume */
-    #volume-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-bottom: 6px;
-    }
-
+    #volume-wrap { display: flex; align-items: center; gap: 10px; padding-bottom: 4px; }
     #volume-wrap svg { width: 18px; height: 18px; color: var(--sub); flex-shrink: 0; }
 
-    /* Range inputs */
     input[type=range] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 4px;
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 4px; border-radius: 2px; outline: none; cursor: pointer;
     }
-
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #fff;
-      cursor: pointer;
+      -webkit-appearance: none; width: 14px; height: 14px;
+      border-radius: 50%; background: #fff; cursor: pointer;
       box-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
-
     input[type=range]::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #fff;
-      cursor: pointer;
-      border: none;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #fff; cursor: pointer; border: none;
       box-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
 
     /* ── Add section ── */
     #add-section {
-      flex-shrink: 0;
-      padding: 10px 20px;
-      border-top: 1px solid var(--surface2);
-      border-bottom: 1px solid var(--surface2);
+      flex-shrink: 0; padding: 10px 20px;
+      border-top: 1px solid var(--surface2); border-bottom: 1px solid var(--surface2);
     }
-
     #add-wrap { display: flex; gap: 8px; align-items: center; }
-
     #url-input {
-      flex: 1;
-      background: var(--surface);
-      border: 1.5px solid transparent;
-      border-radius: 12px;
-      padding: 11px 14px;
-      color: var(--text);
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-      min-width: 0;
+      flex: 1; background: var(--surface);
+      border: 1.5px solid transparent; border-radius: 12px;
+      padding: 11px 14px; color: var(--text); font-size: 14px;
+      outline: none; transition: border-color 0.2s; min-width: 0;
     }
-
     #url-input::placeholder { color: var(--sub); }
     #url-input:focus { border-color: var(--primary); }
-
     #btn-add {
-      width: 44px;
-      height: 44px;
-      background: var(--primary);
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: opacity 0.15s, transform 0.12s;
+      width: 44px; height: 44px; background: var(--primary); border: none;
+      border-radius: 12px; color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: opacity 0.15s, transform 0.12s;
       -webkit-tap-highlight-color: transparent;
     }
-
-    #btn-add:active { opacity: 0.75; transform: scale(0.93); }
+    #btn-add:active  { opacity: 0.75; transform: scale(0.93); }
     #btn-add:disabled { opacity: 0.5; }
     #btn-add svg { width: 22px; height: 22px; }
 
     /* ── Playlist ── */
     #playlist {
-      flex: 1;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
       padding: 6px 12px 24px;
     }
-
     #playlist::-webkit-scrollbar { width: 3px; }
     #playlist::-webkit-scrollbar-track { background: transparent; }
     #playlist::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
 
     #playlist-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      gap: 6px;
-      color: var(--sub);
-      font-size: 14px;
-      text-align: center;
-      padding: 20px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; height: 100%; gap: 6px;
+      color: var(--sub); font-size: 14px; text-align: center; padding: 20px;
     }
-
     #playlist-empty svg { width: 36px; height: 36px; opacity: 0.3; margin-bottom: 4px; }
 
     .track-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.15s;
-      -webkit-tap-highlight-color: transparent;
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; border-radius: 10px; cursor: pointer;
+      transition: background 0.15s; -webkit-tap-highlight-color: transparent;
       border-left: 3px solid transparent;
     }
-
-    .track-item:hover { background: var(--surface); }
-
-    .track-item.active {
-      background: var(--surface);
-      border-left-color: var(--primary);
-    }
+    .track-item:hover  { background: var(--surface); }
+    .track-item.active { background: var(--surface); border-left-color: var(--primary); }
 
     .track-thumb {
-      width: 56px;
-      height: 34px;
-      border-radius: 6px;
-      object-fit: cover;
-      flex-shrink: 0;
-      background: var(--surface2);
+      width: 56px; height: 34px; border-radius: 6px; object-fit: cover;
+      flex-shrink: 0; background: var(--surface2);
     }
-
     .track-meta { flex: 1; min-width: 0; }
-
     .track-name {
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 13px; font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
     .track-item.active .track-name { color: var(--primary); }
-
     .track-author {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 11px; color: var(--sub); margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
     .track-del {
-      background: none;
-      border: none;
-      color: var(--sub);
-      cursor: pointer;
-      padding: 6px 8px;
-      font-size: 13px;
-      border-radius: 6px;
-      flex-shrink: 0;
-      transition: color 0.15s;
-      -webkit-tap-highlight-color: transparent;
+      background: none; border: none; color: var(--sub); cursor: pointer;
+      padding: 6px 8px; font-size: 13px; border-radius: 6px;
+      flex-shrink: 0; transition: color 0.15s; -webkit-tap-highlight-color: transparent;
     }
-
     .track-del:hover { color: var(--primary); }
 
-    /* Toast */
+    /* ── Toast ── */
     .toast {
-      position: fixed;
-      bottom: 72px;
-      left: 50%;
-      transform: translateX(-50%) translateY(0);
-      background: var(--surface3);
-      color: var(--text);
-      padding: 10px 18px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 500;
-      z-index: 999;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      animation: fadeUp 0.2s ease;
-      white-space: nowrap;
-      max-width: calc(100vw - 40px);
-      text-align: center;
-      transition: opacity 0.3s;
+      position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%);
+      background: var(--surface3); color: var(--text);
+      padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 500;
+      z-index: 999; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      animation: fadeUp 0.2s ease; white-space: nowrap;
+      max-width: calc(100vw - 40px); text-align: center; transition: opacity 0.3s;
     }
-
     .toast.error { background: #6d1f1f; }
-
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateX(-50%) translateY(8px); }
-      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+      from { opacity:0; transform:translateX(-50%) translateY(8px); }
+      to   { opacity:1; transform:translateX(-50%) translateY(0); }
     }
 
-    /* Loading spinner */
     .spinner {
-      display: inline-block;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-<!-- YouTube player (hidden, off-screen) -->
+<!-- Hidden YouTube player -->
 <div style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;pointer-events:none;">
   <div id="ytplayer"></div>
 </div>
 
+<!-- ── Username setup modal ── -->
+<div id="username-modal">
+  <div class="un-card">
+    <div class="un-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z" fill="white" stroke="none"/>
+        <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" fill="white" stroke="none"/>
+      </svg>
+    </div>
+    <h1>TubePlay</h1>
+    <p>Elige un nombre de usuario para guardar y sincronizar tu lista en todos tus dispositivos.</p>
+    <input type="text" id="username-input" placeholder="mi_nombre_secreto"
+      autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="none" />
+    <button id="btn-set-username">Empezar →</button>
+    <span class="un-hint">Usa el mismo nombre en cada dispositivo para sincronizar</span>
+  </div>
+</div>
+
+<!-- ── Main app ── -->
 <div id="app">
 
-  <!-- ── Player section ── -->
-  <div id="player-section">
+  <div id="top-bar">
+    <span id="app-name">TubePlay</span>
+    <div id="user-badge" title="Cambiar usuario">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+      <span id="user-name">—</span>
+      <span id="sync-dot"></span>
+    </div>
+  </div>
 
+  <div id="player-section">
     <div id="thumbnail-wrap">
       <img id="thumbnail" alt="" />
       <div id="thumb-placeholder">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 18V5l12-2v13"/>
-          <circle cx="6" cy="18" r="3"/>
-          <circle cx="18" cy="16" r="3"/>
+          <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
         </svg>
       </div>
     </div>
@@ -409,7 +358,7 @@
         </svg>
       </button>
       <button id="btn-playpause" aria-label="Play/Pausa">
-        <svg id="icon-play" viewBox="0 0 24 24" fill="white"><polygon points="7,4 21,12 7,20"/></svg>
+        <svg id="icon-play"  viewBox="0 0 24 24" fill="white"><polygon points="7,4 21,12 7,20"/></svg>
         <svg id="icon-pause" viewBox="0 0 24 24" fill="white" style="display:none">
           <rect x="5" y="3" width="4" height="18" rx="1"/>
           <rect x="15" y="3" width="4" height="18" rx="1"/>
@@ -430,14 +379,11 @@
       </svg>
       <input type="range" id="volume-bar" min="0" max="100" value="80" />
     </div>
-
   </div>
 
-  <!-- ── Add URL ── -->
   <div id="add-section">
     <div id="add-wrap">
-      <input type="url" id="url-input"
-        placeholder="Pegar enlace de YouTube…"
+      <input type="url" id="url-input" placeholder="Pegar enlace de YouTube…"
         autocomplete="off" autocorrect="off" spellcheck="false" />
       <button id="btn-add" aria-label="Añadir">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
@@ -448,14 +394,12 @@
     </div>
   </div>
 
-  <!-- ── Playlist ── -->
   <div id="playlist">
     <div id="playlist-empty">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-        <line x1="8" y1="6" x2="21" y2="6"/>
-        <line x1="8" y1="12" x2="21" y2="12"/>
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
         <line x1="8" y1="18" x2="21" y2="18"/>
-        <line x1="3" y1="6" x2="3.01" y2="6" stroke-width="2"/>
+        <line x1="3" y1="6"  x2="3.01" y2="6"  stroke-width="2"/>
         <line x1="3" y1="12" x2="3.01" y2="12" stroke-width="2"/>
         <line x1="3" y1="18" x2="3.01" y2="18" stroke-width="2"/>
       </svg>
@@ -466,21 +410,26 @@
 
 </div>
 
-<script>
-// ─────────────────────────────────────
-//  STATE
-// ─────────────────────────────────────
-let playlist = [];
-let currentIndex = -1;
-let isPlaying = false;
-let ytReady = false;
-let ytPlayer = null;
-let seekTimer = null;
-let audioCtx = null;
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// ─────────────────────────────────────
-//  YOUTUBE IFRAME API
-// ─────────────────────────────────────
+const sb = createClient(
+  'https://ioobowfkwhoeahokupxa.supabase.co',
+  'sb_publishable_wDYczAI_Xz0Uqg-bfPQBUw_nz7oKT5H'
+);
+
+// ── State ──
+let playlist     = [];
+let currentIndex = -1;
+let isPlaying    = false;
+let ytReady      = false;
+let ytPlayer     = null;
+let seekTimer    = null;
+let audioCtx     = null;
+let username     = null;
+let syncTimeout  = null;
+
+// ── YouTube IFrame API ──
 (function () {
   const s = document.createElement('script');
   s.src = 'https://www.youtube.com/iframe_api';
@@ -490,18 +439,11 @@ let audioCtx = null;
 window.onYouTubeIframeAPIReady = function () {
   ytPlayer = new YT.Player('ytplayer', {
     width: '1', height: '1',
-    playerVars: {
-      autoplay: 0, controls: 0, disablekb: 1,
-      fs: 0, iv_load_policy: 3, modestbranding: 1,
-      rel: 0, playsinline: 1,
-    },
+    playerVars: { autoplay:0, controls:0, disablekb:1, fs:0, iv_load_policy:3, modestbranding:1, rel:0, playsinline:1 },
     events: {
-      onReady() {
-        ytReady = true;
-        ytPlayer.setVolume(+$('volume-bar').value);
-      },
+      onReady()      { ytReady = true; ytPlayer.setVolume(+$('volume-bar').value); },
       onStateChange: onYTStateChange,
-      onError: onYTError,
+      onError:       onYTError,
     },
   });
 };
@@ -509,37 +451,25 @@ window.onYouTubeIframeAPIReady = function () {
 function onYTStateChange(e) {
   const S = YT.PlayerState;
   if (e.data === S.PLAYING) {
-    isPlaying = true;
-    updatePlayBtn();
-    startSeekTimer();
-    setMediaPlaybackState('playing');
-    keepAudioAlive();
+    isPlaying = true;  updatePlayBtn(); startSeekTimer(); setMediaPlaybackState('playing'); keepAudioAlive();
   } else if (e.data === S.PAUSED) {
-    isPlaying = false;
-    updatePlayBtn();
-    stopSeekTimer();
-    setMediaPlaybackState('paused');
+    isPlaying = false; updatePlayBtn(); stopSeekTimer();  setMediaPlaybackState('paused');
   } else if (e.data === S.ENDED) {
-    stopSeekTimer();
-    playNext();
+    stopSeekTimer(); playNext();
   }
 }
 
 function onYTError(e) {
-  const msg = { 2: 'URL no válida', 5: 'Error HTML5', 100: 'Video no encontrado', 101: 'No se puede reproducir', 150: 'No se puede reproducir' };
+  const msg = { 2:'URL no válida', 5:'Error HTML5', 100:'Video no encontrado', 101:'No se puede reproducir', 150:'No se puede reproducir' };
   showToast(msg[e.data] || 'Error al reproducir', 'error');
   setTimeout(playNext, 1800);
 }
 
-// ─────────────────────────────────────
-//  HELPERS
-// ─────────────────────────────────────
+// ── Helpers ──
 const $ = id => document.getElementById(id);
 
 function extractVideoId(url) {
-  const m = url.match(
-    /(?:youtube\.com\/(?:watch\?.*?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
-  );
+  const m = url.match(/(?:youtube\.com\/(?:watch\?.*?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
   return m ? m[1] : null;
 }
 
@@ -556,30 +486,124 @@ async function fetchVideoInfo(id) {
 
 function formatTime(s) {
   if (!isFinite(s) || s < 0) return '0:00';
-  const m = Math.floor(s / 60);
-  return `${m}:${Math.floor(s % 60).toString().padStart(2, '0')}`;
+  return `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
 }
 
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function thumb(id) {
-  return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
-}
+function thumb(id) { return `https://img.youtube.com/vi/${id}/mqdefault.jpg`; }
 
-function showToast(msg, type = 'info') {
+function showToast(msg, type='info') {
   const t = document.createElement('div');
-  t.className = 'toast' + (type === 'error' ? ' error' : '');
+  t.className = 'toast' + (type==='error' ? ' error' : '');
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => { t.style.opacity = '0'; }, 2400);
   setTimeout(() => t.remove(), 2700);
 }
 
-// ─────────────────────────────────────
-//  PLAYLIST MANAGEMENT
-// ─────────────────────────────────────
+// ── Username ──
+function normalizeUsername(raw) {
+  return raw.trim().toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_-]/g,'');
+}
+
+async function initUsername() {
+  username = localStorage.getItem('tp_username');
+  if (!username) {
+    $('username-modal').style.display = 'flex';
+  } else {
+    $('username-modal').style.display = 'none';
+    $('user-name').textContent = username;
+    await loadPlaylistFromDB();
+  }
+}
+
+$('btn-set-username').addEventListener('click', async () => {
+  const name = normalizeUsername($('username-input').value);
+  if (!name) { $('username-input').focus(); return; }
+  username = name;
+  localStorage.setItem('tp_username', username);
+  $('username-modal').style.display = 'none';
+  $('user-name').textContent = username;
+  await loadPlaylistFromDB();
+});
+
+$('username-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') $('btn-set-username').click();
+});
+
+// Tap badge → change username
+$('user-badge').addEventListener('click', () => {
+  $('username-input').value = username || '';
+  $('username-modal').style.display = 'flex';
+  setTimeout(() => $('username-input').focus(), 100);
+});
+
+// ── Supabase sync ──
+function setSyncDot(state) {
+  const d = $('sync-dot');
+  d.className = '';
+  if (state === 'syncing') d.classList.add('syncing');
+  if (state === 'synced')  d.classList.add('synced');
+}
+
+async function loadPlaylistFromDB() {
+  if (!username) return;
+  setSyncDot('syncing');
+  try {
+    const { data, error } = await sb
+      .from('playlist_tracks')
+      .select('video_id, title, channel, position')
+      .eq('username', username)
+      .order('position');
+    if (error) throw error;
+    if (data && data.length > 0) {
+      playlist = data.map(t => ({ id: t.video_id, title: t.title, channel: t.channel }));
+      renderPlaylist();
+      const idx = parseInt(localStorage.getItem('tp_idx') ?? '-1', 10);
+      if (idx >= 0 && idx < playlist.length) {
+        currentIndex = idx;
+        updateNowPlaying(playlist[idx]);
+      }
+    }
+    setSyncDot('synced');
+  } catch {
+    setSyncDot('');
+    try {
+      const raw = localStorage.getItem('tp_list');
+      if (raw) { playlist = JSON.parse(raw); renderPlaylist(); }
+    } catch {}
+  }
+}
+
+async function syncPlaylistToDB() {
+  if (!username) return;
+  setSyncDot('syncing');
+  try {
+    await sb.from('playlist_tracks').delete().eq('username', username);
+    if (playlist.length > 0) {
+      await sb.from('playlist_tracks').insert(
+        playlist.map((t, i) => ({ username, video_id: t.id, title: t.title, channel: t.channel, position: i }))
+      );
+    }
+    setSyncDot('synced');
+  } catch {
+    setSyncDot('');
+  }
+}
+
+function savePlaylist() {
+  try {
+    localStorage.setItem('tp_list', JSON.stringify(playlist));
+    localStorage.setItem('tp_idx', currentIndex);
+  } catch {}
+  clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(syncPlaylistToDB, 600);
+}
+
+// ── Playlist ──
 async function addTrack(url) {
   const id = extractVideoId(url);
   if (!id) { showToast('URL de YouTube no válida', 'error'); return; }
@@ -604,8 +628,7 @@ async function addTrack(url) {
 function removeTrack(i) {
   playlist.splice(i, 1);
   if (i === currentIndex) {
-    currentIndex = -1;
-    isPlaying = false;
+    currentIndex = -1; isPlaying = false;
     if (ytReady) ytPlayer.stopVideo();
     resetNowPlaying();
     if (playlist.length > 0) playTrack(Math.min(i, playlist.length - 1));
@@ -619,14 +642,8 @@ function removeTrack(i) {
 function renderPlaylist() {
   const el = $('playlist');
   const empty = $('playlist-empty');
-
-  if (playlist.length === 0) {
-    el.innerHTML = '';
-    el.appendChild(empty);
-    return;
-  }
+  if (playlist.length === 0) { el.innerHTML = ''; el.appendChild(empty); return; }
   if (empty.parentElement === el) el.removeChild(empty);
-
   el.innerHTML = playlist.map((t, i) => `
     <div class="track-item${i === currentIndex ? ' active' : ''}" data-i="${i}">
       <img class="track-thumb" src="${esc(thumb(t.id))}" loading="lazy" onerror="this.style.visibility='hidden'" />
@@ -637,14 +654,11 @@ function renderPlaylist() {
       <button class="track-del" data-del="${i}" aria-label="Eliminar">✕</button>
     </div>
   `).join('');
-
   const active = el.querySelector('.active');
   if (active) active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
-// ─────────────────────────────────────
-//  PLAYBACK
-// ─────────────────────────────────────
+// ── Playback ──
 function playTrack(index) {
   if (index < 0 || index >= playlist.length) return;
   currentIndex = index;
@@ -663,58 +677,47 @@ function togglePlay() {
 }
 
 function playNext() {
-  if (playlist.length === 0) return;
+  if (!playlist.length) return;
   playTrack((currentIndex + 1) % playlist.length);
 }
 
 function playPrev() {
-  if (playlist.length === 0) return;
+  if (!playlist.length) return;
   if (ytReady && ytPlayer.getCurrentTime() > 3) { ytPlayer.seekTo(0, true); return; }
   playTrack((currentIndex - 1 + playlist.length) % playlist.length);
 }
 
-// ─────────────────────────────────────
-//  UI UPDATES
-// ─────────────────────────────────────
+// ── UI ──
 function updateNowPlaying(t) {
   $('track-title').textContent = t.title;
-  $('track-channel').textContent = t.channel || ' ';
+  $('track-channel').textContent = t.channel || ' ';
   const img = $('thumbnail');
-  img.src = thumb(t.id);
-  img.style.display = 'block';
+  img.src = thumb(t.id); img.style.display = 'block';
   $('thumb-placeholder').style.display = 'none';
 }
 
 function resetNowPlaying() {
   $('track-title').textContent = 'Sin pista';
-  $('track-channel').textContent = ' ';
+  $('track-channel').textContent = ' ';
   $('thumbnail').style.display = 'none';
   $('thumb-placeholder').style.display = 'flex';
-  $('seek-bar').value = 0;
-  updateSeekBg(0);
+  $('seek-bar').value = 0; updateSeekBg(0);
   $('current-time').textContent = '0:00';
   $('duration').textContent = '--:--';
 }
 
 function updatePlayBtn() {
-  $('icon-play').style.display = isPlaying ? 'none' : 'block';
+  $('icon-play').style.display  = isPlaying ? 'none'  : 'block';
   $('icon-pause').style.display = isPlaying ? 'block' : 'none';
 }
 
-function startSeekTimer() {
-  stopSeekTimer();
-  seekTimer = setInterval(tickSeek, 500);
-}
-
-function stopSeekTimer() {
-  clearInterval(seekTimer);
-  seekTimer = null;
-}
+function startSeekTimer() { stopSeekTimer(); seekTimer = setInterval(tickSeek, 500); }
+function stopSeekTimer()  { clearInterval(seekTimer); seekTimer = null; }
 
 function tickSeek() {
   if (!ytReady) return;
   const cur = ytPlayer.getCurrentTime() || 0;
-  const dur = ytPlayer.getDuration() || 0;
+  const dur = ytPlayer.getDuration()    || 0;
   const pct = dur > 0 ? cur / dur * 1000 : 0;
   $('seek-bar').value = pct;
   updateSeekBg(pct / 10);
@@ -726,25 +729,18 @@ function tickSeek() {
 }
 
 function updateSeekBg(pct) {
-  $('seek-bar').style.background =
-    `linear-gradient(to right, #e63946 ${pct}%, #2c2c2e ${pct}%)`;
+  $('seek-bar').style.background = `linear-gradient(to right,#e63946 ${pct}%,#2c2c2e ${pct}%)`;
 }
-
 function updateVolumeBg() {
   const v = $('volume-bar').value;
-  $('volume-bar').style.background =
-    `linear-gradient(to right, rgba(255,255,255,0.8) ${v}%, #2c2c2e ${v}%)`;
+  $('volume-bar').style.background = `linear-gradient(to right,rgba(255,255,255,0.8) ${v}%,#2c2c2e ${v}%)`;
 }
 
-// ─────────────────────────────────────
-//  MEDIA SESSION API (lock screen)
-// ─────────────────────────────────────
+// ── Media Session API ──
 function setMediaSession(t) {
   if (!('mediaSession' in navigator)) return;
   navigator.mediaSession.metadata = new MediaMetadata({
-    title: t.title,
-    artist: t.channel,
-    album: 'TubePlay',
+    title: t.title, artist: t.channel, album: 'TubePlay',
     artwork: [{ src: thumb(t.id), sizes: '320x180', type: 'image/jpeg' }],
   });
   navigator.mediaSession.setActionHandler('play',          () => ytPlayer.playVideo());
@@ -753,77 +749,37 @@ function setMediaSession(t) {
   navigator.mediaSession.setActionHandler('previoustrack', playPrev);
   navigator.mediaSession.setActionHandler('seekto',        e => ytReady && ytPlayer.seekTo(e.seekTime, true));
 }
-
-function setMediaPlaybackState(state) {
-  if ('mediaSession' in navigator) navigator.mediaSession.playbackState = state;
+function setMediaPlaybackState(s) {
+  if ('mediaSession' in navigator) navigator.mediaSession.playbackState = s;
 }
 
-// ─────────────────────────────────────
-//  iOS BACKGROUND AUDIO TRICK
-//  Keeps AudioContext alive so the OS
-//  doesn't kill audio when screen locks
-// ─────────────────────────────────────
+// ── iOS background audio trick ──
 function keepAudioAlive() {
-  if (audioCtx) {
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    return;
-  }
+  if (audioCtx) { if (audioCtx.state === 'suspended') audioCtx.resume(); return; }
   try {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const buf = audioCtx.createBuffer(1, audioCtx.sampleRate, audioCtx.sampleRate);
     const src = audioCtx.createBufferSource();
-    src.buffer = buf;
-    src.loop = true;
-    src.connect(audioCtx.destination);
-    src.start(0);
+    src.buffer = buf; src.loop = true;
+    src.connect(audioCtx.destination); src.start(0);
   } catch {}
 }
 
-// ─────────────────────────────────────
-//  PERSISTENCE
-// ─────────────────────────────────────
-function savePlaylist() {
-  try {
-    localStorage.setItem('tp_list', JSON.stringify(playlist));
-    localStorage.setItem('tp_idx', currentIndex);
-  } catch {}
-}
-
-function loadPlaylist() {
-  try {
-    const raw = localStorage.getItem('tp_list');
-    if (raw) playlist = JSON.parse(raw);
-    const idx = parseInt(localStorage.getItem('tp_idx') ?? '-1', 10);
-    if (idx >= 0 && idx < playlist.length) {
-      currentIndex = idx;
-      updateNowPlaying(playlist[idx]);
-    }
-    renderPlaylist();
-  } catch {}
-}
-
-// ─────────────────────────────────────
-//  ICON HELPER
-// ─────────────────────────────────────
 function plusSVG() {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
     <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
   </svg>`;
 }
 
-// ─────────────────────────────────────
-//  EVENT LISTENERS
-// ─────────────────────────────────────
+// ── Events ──
 $('btn-playpause').addEventListener('click', togglePlay);
 $('btn-prev').addEventListener('click', playPrev);
 $('btn-next').addEventListener('click', playNext);
 
 $('seek-bar').addEventListener('input', e => {
-  const pct = +e.target.value / 10;
-  updateSeekBg(pct);
+  const pct = +e.target.value / 10; updateSeekBg(pct);
   if (!ytReady) return;
-  const dur = ytPlayer.getDuration() || 0;
-  ytPlayer.seekTo(dur * pct / 100, true);
+  ytPlayer.seekTo((ytPlayer.getDuration() || 0) * pct / 100, true);
 });
 
 $('volume-bar').addEventListener('input', e => {
@@ -836,41 +792,29 @@ $('btn-add').addEventListener('click', () => {
   if (v) addTrack(v);
 });
 
-$('url-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') $('btn-add').click();
-});
+$('url-input').addEventListener('keydown', e => { if (e.key === 'Enter') $('btn-add').click(); });
 
-// Auto-add when pasting a YouTube URL
 $('url-input').addEventListener('paste', () => {
   setTimeout(() => {
     const v = $('url-input').value.trim();
-    if (v && (v.includes('youtube.com') || v.includes('youtu.be'))) {
-      $('btn-add').click();
-    }
+    if (v && (v.includes('youtube.com') || v.includes('youtu.be'))) $('btn-add').click();
   }, 60);
 });
 
-// Playlist click delegation
 $('playlist').addEventListener('click', e => {
-  const del = e.target.closest('[data-del]');
+  const del  = e.target.closest('[data-del]');
   if (del) { removeTrack(+del.dataset.del); return; }
   const item = e.target.closest('.track-item[data-i]');
   if (item) playTrack(+item.dataset.i);
 });
 
-// ─────────────────────────────────────
-//  SERVICE WORKER
-// ─────────────────────────────────────
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
-}
+// ── Service Worker ──
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
 
-// ─────────────────────────────────────
-//  INIT
-// ─────────────────────────────────────
+// ── Init ──
 updateSeekBg(0);
 updateVolumeBg();
-loadPlaylist();
+initUsername();
 </script>
 
 </body>
